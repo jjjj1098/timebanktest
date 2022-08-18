@@ -61,18 +61,18 @@
 
             location.href="view.html?"+title+":"+address+":"+name+":"+timecoin+":"+gender+":"+content+":"+day;
         }
-        function send(){
-            title=title_tx.value;
-            address=address_tx.value;
-            name = name_tx.value;
-            timecoin=timecoin_tx.value;
-            gender=gender_tx.value;
-            content=content_tx.value;
-            day = day_tx.value;
+        // function send(){
+        //     title=title_tx.value;
+        //     address=address_tx.value;
+        //     name = name_tx.value;
+        //     timecoin=timecoin_tx.value;
+        //     gender=gender_tx.value;
+        //     content=content_tx.value;
+        //     day = day_tx.value;
 
-            location.href="board.html?"+title+":"+address+":"+name+":"+timecoin+":"+gender+":"+content+":"+day;
+        //     location.href="board.html?"+title+":"+address+":"+name+":"+timecoin+":"+gender+":"+content+":"+day;
         
-        }
+        // }
         
     </script>
 </head>
@@ -109,14 +109,14 @@
                             <div class="subsubbox">
                         <span class=day>요청 날짜 :</span>
                             </div>
-                        <input id="day_tx" class = "txbox" type="text" name="day">
+                        <input id="day_tx" class = "txbox" type="date" name="day">
                     <br/>
                     </div>
                         <div class="wribox">
                                 <div class="subsubbox">
                             <span class=timecoin>적립시간 :</span>
                                 </div>
-                            <input id="timecoin_tx" class = "txbox" type="text" name="timecoin">
+                            <input id="timecoin_tx" class = "txbox" type="number" name="timecoin">
                         <br/>
                         </div>
                         <div class="wribox">
@@ -135,7 +135,7 @@
                     </div>
 
                     <div class="btnbox">       
-                        <button class="btn" onclick="send()">돌아가기</button></a>
+                        <a href="board.html"><button class="btn">돌아가기</button></a>
                         <input class ="btn" type="submit" value="글작성" onclick="val();">
                         <!--<a href="view.html"><button class="btn">글 작성</button></a>-->
                     </div> 

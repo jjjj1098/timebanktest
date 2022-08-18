@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Board with Local Storage</title>
+<link
+rel="stylesheet"
+/>
+<style>
+* {
+box-sizing: border-box;
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+font-family: 'Jua', sans-serif;
+}
+body {
+padding: 0px;
+margin: 0px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+width: 100%;
+height: 95vh;
+background-color: #eaeaf8;
+}
+
+.main_text{
+    color: #4949E8;
+    font-size: 50px;
+    padding-top: 120px;;
+}
+ 
+.main__container {
+height: 700px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+ 
+.board__container,
+.contents__container,
+.editor__container {
+border-style: solid;
+border-color: #4949E8;
+width: 950px;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+flex-direction: column;
+background-color: #ffffff;
+}
+ 
+.board__container {
+margin: 10px 0px 0px 0px;
+height: 400px;
+padding-top: 10px;
+padding-bottom: 10px;
+line-height: 40px;
+box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+position: relative;
+}
+ 
+.contents__container {
+margin: 10px 0px;
+height: 460px;
+padding-top: 10px;
+padding-bottom: 10px;
+box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+ 
+.editor__container {
+margin: 10px 0px;
+height: 560px;
+padding-top: 30px;
+padding-bottom: 10px;
+box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+ 
+/* Board Lists */
+.board {
+width: 850px;
+text-align: center;
+margin-bottom: 15px;
+}
+ 
+.board__index-container {
+position: absolute;
+bottom: 10px;
+}
+ 
+.board__index-link {
+all: unset;
+margin-right: 5px;
+}
+ 
+.board__index-link:hover {
+cursor: pointer;
+color: blue;
+}
+ 
+/* Contents */
+.contents__titles {
+width: 600px;
+height: 60px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding-bottom: 10px;
+border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+margin-bottom: 20px;
+}
+.contents__titles2 {
+width: 600px;
+height: 130px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding-bottom: 10px;
+border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+margin-bottom: 20px;
+}
+ 
+.contents__column {
+width: 1000px;
+/* display: flex; */
+justify-content: space-around;
+align-items: center;
+
+}
+
+.contents__column2 {
+width: 200px;
+/* display: flex; */
+justify-content: space-around;
+align-items: center;
+}
+
+.contents__content {
+width: 600px;
+display: flex;
+justify-content: start;
+align-items: center;
+}
+ 
+/* Editor */
+.editor__form {
+width: 600px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+ 
+input {
+all: unset;
+border-radius: 5px;
+border: 1px solid rgba(0, 0, 0, 0.5);
+}
+ 
+.editor__title-input,
+.editor__address-input,
+.editor__name-input,
+.editor__date-input,
+.editor__timecoin-input,
+.editor__gender-input {
+width: 100%;
+padding: 5px 10px;
+margin-bottom: 10px;
+}
+ 
+.editor__content-input {
+width: 100%;
+padding: 5px 10px;
+margin-bottom: 10px;
+height: 200px;
+}
+
+.btn{
+border: 1px solid rgba(255, 255, 255);
+width: 70px;
+height: 30px;
+border-radius: 5px;
+position: absolute;
+right: 1160px;
+top: 125px;
+color: #ffffff;
+background-color: #4949E8;
+font-weight: 700;
+}
+.btn:hover{
+    color:#4949E8;
+    background-color: white;
+    border: 2px solid #4949E8;
+    font-weight: 700;
+}
+
+.accept__btn {
+all: unset;
+border: 1px solid rgba(0, 0, 0, 0.5);
+border-radius: 10px;
+padding: 1px 3px;
+}
+
+.accept__btn:hover {
+    color:#4949E8;
+    background-color: white;
+    border:2px solid #4949E8;
+}
+
+.editor__btn {
+all: unset;
+border: 1px solid rgba(0, 0, 0, 0.5);
+border-radius: 5px;
+padding: 5px 10px;
+}
+
+.editor__btn:hover {
+    color:#4949E8;
+    background-color: white;
+    border:2px solid #4949E8;
+}
+
+button:active {
+transform: scale(0.93);
+}
+</style>
+</head>
+<body>
+<h2 class="main_text">HELP LIST</h2>
+<a href="/"><button class="btn">Home</button></a>
+<main class="main__container">
+
+<div class="board__container">
+<table class="board">
+<thead class="board__table-head">
+<tr class="board__titles">
+<th class="board__column">번호</th>
+<th class="board__column">제목</th>
+<th class="board__column">작성자</th>
+<th class="board__column">희망성별</th>
+<th class="board__column">요청날짜</th>
+<th class="board__column">적립 시간</th>
+
+</tr>
+</thead>
+<tbody class="board__contents" id="board-body"></tbody>
+</table>
+<div class="board__index-container" id="index-container"></div>
+</div>
+<div class="contents__container"></div>
+<div class="editor__container">
+<form action="#" class="editor__form" id="editor-form">
+<input
+type="text"
+class="editor__title-input"
+id="editor-title-input"
+placeholder="제목"
+/>
+<input
+type="button"
+class="editor__address-input"
+id="editor-address-input"
+onclick="openMap()"
+value="주소"
+/>
+<input
+type="text"
+class="editor__name-input"
+id="editor-name-input"
+placeholder="작성자"
+/>
+<input
+type="date"
+class="editor__date-input"
+id="editor-date-input"
+placeholder="요청 날짜"
+/>
+<input
+type="number"
+class="editor__timecoin-input"
+id="editor-timecoin-input"
+placeholder="적립 시간"
+/>
+<input
+type="text"
+class="editor__gender-input"
+id="editor-gender-input"
+placeholder="희망 성별"
+/>
+<input
+type="text"
+class="editor__content-input"
+id="editor-content-input"
+placeholder="내용"
+/>
+<button class="editor__btn" id="editor-submit-btn" >작성 완료</button>
+</form>
+</div>
+</main>
+<script>
+    function val (){
+        var title_tx = document.getElementById("editor-title-input");
+        var address_tx = document.getElementById("editor-address-input");
+        var name_tx = document.getElementById("editor-name-input");
+        var date_tx = document.getElementById("editor-date-input");
+        var timecoin_tx = document.getElementById("editor-timecoin-input");
+        var gender_tx = document.getElementById("editor-gender-input");
+        var content_tx = document.getElementById("editor-content-input");
+
+        if(title_tx.value==""){
+            alert("제목을 입력해주세요.");
+            event.preventDefault();
+        } else if(address_tx.value==""){
+            alert("주소를 입력해주세요.");
+            event.preventDefault();
+        } else if(name_tx.value==""){
+            alert("이름을 입력해주세요.");
+            event.preventDefault();
+        } else if(date_tx.value==""){
+            alert("요청 날짜를 입력해주세요.");
+            event.preventDefault();
+        } else if(timecoin_tx.value==""){
+            alert("적립시간을 입력해주세요.(분)");
+            event.preventDefault();
+        } else if(gender_tx.value==""){
+            alert("희망성별을 입력해주세요.");
+            event.preventDefault();
+        } else if(content_tx.value==""){
+            alert("내용을 입력해주세요.");
+            event.preventnDefault();
+        }
+    }
+    function openMap(){
+        window.name = "addressForm";
+        oepnWin = window.open("helpmap.html", "mapForm", "width=570, height=350, resizable = no, scrollbars = no");
+    }
+const boardTableBody = document.querySelector('#board-body');
+ 
+const contentsContainer = document.querySelector('.contents__container');
+ 
+const editorForm = document.querySelector('#editor-form');
+const titleInput = document.querySelector('#editor-title-input');
+const addressInput = document.querySelector('#editor-address-input');
+const nameInput = document.querySelector('#editor-name-input');
+const genderInput = document.querySelector('#editor-gender-input');
+const dateInput = document.querySelector('#editor-date-input');
+const timecoinInput = document.querySelector('#editor-timecoin-input');
+const contentInput = document.querySelector('#editor-content-input');
+ 
+const BOARDLIST_LS = 'boardlist';
+const boardListsObj = [];
+let nums = 0;
+ 
+    function onTitleClick(e) {
+        contentsContainer.textContent = '';
+        const lists = JSON.parse(localStorage.getItem(BOARDLIST_LS));
+        const index = e.target.parentNode.id.replace(/[a-z|-]/gi, '');
+ 
+        const contentsTitles = document.createElement('div');
+        contentsTitles.classList.add('contents__titles');
+
+        const contentsInfos = document.createElement('div');
+        contentsInfos.classList.add('contents__titles2');
+        
+        const contentsColumnFirst = document.createElement('div');
+        contentsColumnFirst.classList.add('contents__column');
+        
+        const contentsTitle = document.createElement('div');
+        contentsTitle.classList.add('contents__title');
+        contentsTitle.textContent = lists[index].title;
+        
+        // contents__titles > column >author, date, views
+        const contentsColumnSecond = document.createElement('div');
+        contentsColumnSecond.classList.add('contents__column2');
+
+        const contentsColumnThird = document.createElement('div');
+        contentsColumnThird.classList.add('contents__column');
+        
+        const contentsName = document.createElement('div');
+        contentsName.classList.add('contents__name');
+        contentsName.textContent = lists[index].name;
+
+        const contentsAddress = document.createElement('div');
+        contentsAddress.classList.add('contents__address');
+        contentsAddress.textContent = lists[index].address;
+        
+        const contentsGender = document.createElement('div');
+        contentsGender.classList.add('contents__gender');
+        contentsGender.textContent = lists[index].gender;
+
+        const contentsDate = document.createElement('div');
+        contentsDate.classList.add('contents__date');
+        contentsDate.textContent = lists[index].date;
+
+        const contentsTimecoin = document.createElement('div');
+        contentsTimecoin.classList.add('contents__timecoin');
+        contentsTimecoin.textContent = lists[index].timecoin;
+        
+        const contentsContent = document.createElement('div');
+        contentsContent.classList.add('contents__content');
+        contentsContent.textContent = lists[index].content;
+
+        const Atext1 = document.createElement('div');
+        var Aname = document.createTextNode( '이름 :');
+        Atext1.appendChild(Aname);
+        const Atext2 = document.createElement('div');
+        var Aaddress = document.createTextNode( '주소 :' );
+        Atext2.appendChild(Aaddress);
+        const Atext3 = document.createElement('div');
+        var Agender = document.createTextNode( '희망 성별 :' );
+        Atext3.appendChild(Agender);
+        const Atext4 = document.createElement('div');
+        var Adate = document.createTextNode( '희망 날짜 :' );
+        Atext4.appendChild(Adate);
+        const Atext5 = document.createElement('div');
+        var Acoin = document.createTextNode( '적립 시간 :' );
+        Atext5.appendChild(Acoin);
+        
+        contentsColumnFirst.appendChild(contentsTitle);
+
+        contentsColumnSecond.appendChild(Atext1);
+        contentsColumnSecond.appendChild(Atext2);
+        contentsColumnSecond.appendChild(Atext3);
+        contentsColumnSecond.appendChild(Atext4);
+        contentsColumnSecond.appendChild(Atext5);
+        
+        contentsColumnThird.appendChild(contentsName);
+        contentsColumnThird.appendChild(contentsAddress);
+        contentsColumnThird.appendChild(contentsGender);
+        contentsColumnThird.appendChild(contentsGender);
+        contentsColumnThird.appendChild(contentsDate);
+        contentsColumnThird.appendChild(contentsTimecoin);
+        
+        contentsTitles.appendChild(contentsColumnFirst);
+        contentsInfos.appendChild(contentsColumnSecond);
+        contentsInfos.appendChild(contentsColumnThird);
+        
+        contentsContainer.appendChild(contentsTitles);
+        contentsContainer.appendChild(contentsInfos);
+        contentsContainer.appendChild(contentsContent);
+        }
+ 
+    function assignIndex() {
+        const lists = JSON.parse(localStorage.getItem(BOARDLIST_LS));
+        if (!lists) {
+        nums = 0;
+        } else {
+        nums = parseInt(lists[lists.length - 1].num) + 1;
+        }
+    }
+ 
+    function onEditorFormSubmit(e) {
+        e.preventDefault();
+ 
+        const title = titleInput.value;
+        const address = addressInput.value;
+        const name = nameInput.value;
+        const date = dateInput.value;
+        const timecoin = timecoinInput.value;
+        const gender = genderInput.value;
+        const content = contentInput.value;
+        
+        const lists = JSON.parse(localStorage.getItem(BOARDLIST_LS));
+        if (!lists) {
+        const objArr = [];
+        objArr.push({
+        num: `${nums++}`,
+        title: `${title}`,
+        address: `${address}`,
+        name: `${name}`,
+        date: `${date}`,
+        timecoin: `${timecoin}`,
+        gender: `${gender}`,
+        content: `${content}`,
+        });
+ 
+        localStorage.setItem(BOARDLIST_LS, JSON.stringify(objArr));
+        } else {
+        lists.push({
+        num: `${nums++}`,
+        title: `${title}`,
+        address: `${address}`,
+        name: `${name}`,
+        date: `${date}`,
+        timecoin: `${timecoin}`,
+        gender: `${gender}`,
+        content: `${content}`,
+        });
+        
+        localStorage.setItem(BOARDLIST_LS, JSON.stringify(lists));
+        }
+        titleInput.value = '';
+        nameInput.value = '';
+        addressInput.value=''
+        dateInput.value=''
+        timecoinInput.value=''
+        genderInput.value=''
+        contentInput.value = '';
+        titleInput.focus();
+        window.location.reload();
+    }
+ 
+    function showBoardLists() {
+        const lists = JSON.parse(localStorage.getItem(BOARDLIST_LS));
+        
+        lists.forEach((list, index) => {
+        if (index < 6) {
+        const tr = document.createElement('tr');
+        tr.classList.add('board__content');
+        
+        const tdNum = document.createElement('td');
+        tdNum.classList.add('board__content-column');
+        tdNum.textContent = list.num;
+        
+        const aTitle = document.createElement('a');
+        aTitle.href = '#';
+        aTitle.id = `link-to-content${index}`;
+        
+        const tdTitle = document.createElement('td');
+        tdTitle.classList.add('board__content-column');
+        tdTitle.textContent = list.title;
+        
+        aTitle.appendChild(tdTitle);
+
+        const tdName = document.createElement('td');
+        tdName.classList.add('board__content-column');
+        tdName.textContent = list.name;
+
+        const tdDate = document.createElement('td');
+        tdDate.classList.add('board__content-column');
+        tdDate.textContent = list.date;
+
+        const tdTimecoin = document.createElement('td');
+        tdTimecoin.classList.add('board__content-column');
+        tdTimecoin.textContent = list.timecoin;
+        
+        const tdGender = document.createElement('td');
+        tdGender.classList.add('board__content-column');
+        tdGender.textContent = list.gender;
+
+        const tdBtn = document.createElement('td');
+        tdBtn.classList.add('accept__btn');
+        //tdBtn.onclick=accept();
+        tdBtn.textContent = "수락";
+        tdBtn.addEventListener("click",accept);
+
+        // const tdO = document.createElement('td');
+        // tdBtn.classList.add('accept__O');
+        // tdBtn.textContent = "O";
+
+        function accept(){
+        var okay = document.getElementsByClassName("accept__btn");
+        alert("수락하였습니다.");
+        const tdO = document.createElement('td');
+        tdBtn.classList.add('accept__O');
+        tdBtn.textContent = " O ";
+        //content.style.display='none';
+        //okay.textContent="O";
+        //document.getElementsByClassName("accept__btn").textContent = "O";
+        //  const btnElement = document.getElementsByClassName('accept__btn');
+        //  btnElement.value = "O";
+    }
+        
+        tr.appendChild(tdNum);
+        tr.appendChild(aTitle);
+        tr.appendChild(tdName);
+        tr.appendChild(tdGender);
+        tr.appendChild(tdDate);
+        tr.appendChild(tdTimecoin);
+        tr.appendChild(tdBtn);
+        // let td_action=document.createElement("td");
+        // td_action.innerHTML=`
+        // <button class="accept__btn" id="accept-btn" onclick='accept()' >수락</button>`;
+        // tr.appendChild(td_action);
+
+        boardTableBody.appendChild(tr);
+        const linkToContent = document.querySelector(
+        `#link-to-content${index}`
+        );
+        linkToContent.addEventListener('click', onTitleClick);
+        } else if (index === 6) {
+        const boardIndexMax = Math.ceil(lists.length / 6);
+        for (let i = 0; i < boardIndexMax; i++) {
+        const indexContainer = document.querySelector('#index-container');
+        
+        const aIndex = document.createElement('a');
+        aIndex.classList.add('board__index-link');
+        
+        const spanIndexText = document.createElement('span');
+        spanIndexText.classList.add('board__index');
+        spanIndexText.textContent = i + 1;
+        
+        aIndex.appendChild(spanIndexText);
+        indexContainer.appendChild(aIndex);
+        
+        aIndex.addEventListener('click', () => {
+        showBoardListsNewPage(i);
+        });
+        }
+        }
+        });
+    }
+
+    
+ 
+    function showBoardListsNewPage(pageIndex) {
+        boardTableBody.textContent = '';
+        const lists = JSON.parse(localStorage.getItem(BOARDLIST_LS));
+        const limitPage = pageIndex * 5;
+        
+        lists.forEach((list, index) => {
+        if (index >= limitPage && index < limitPage + 5) {
+        const tr = document.createElement('tr');
+        tr.classList.add('board__content');
+        
+        const tdNum = document.createElement('td');
+        tdNum.classList.add('board__content-column');
+        tdNum.textContent = list.num;
+        
+        const aTitle = document.createElement('a');
+        aTitle.href = '#';
+        aTitle.id = `link-to-content${index}`;
+        
+        const tdTitle = document.createElement('td');
+        tdTitle.classList.add('board__content-column');
+        tdTitle.textContent = list.title;
+        
+        aTitle.appendChild(tdTitle);
+        
+        const tdName = document.createElement('td');
+        tdName.classList.add('board__content-column');
+        tdName.textContent = list.name;
+
+        const tdDate = document.createElement('td');
+        tdDate.classList.add('board__content-column');
+        tdDate.textContent = list.date;
+
+        const tdTimecoin = document.createElement('td');
+        tdTimecoin.classList.add('board__content-column');
+        tdTimecoin.textContent = list.timecoin;
+        
+        const tdGender = document.createElement('td');
+        tdGender.classList.add('board__content-column');
+        tdGender.textContent = list.gender;
+        
+        tr.appendChild(tdNum);
+        tr.appendChild(aTitle);
+        tr.appendChild(tdName);
+        tr.appendChild(tdDate);
+        tr.appendChild(tdGender);
+        tr.appendChild(tdTimecoin);
+        
+        boardTableBody.appendChild(tr);
+        const linkToContent = document.querySelector(
+        `#link-to-content${index}`
+        );
+        linkToContent.addEventListener('click', onTitleClick);
+        }
+        });
+    }
+ 
+    editorForm.addEventListener('submit', onEditorFormSubmit);
+ 
+    if (boardTableBody) {
+    assignIndex();
+    showBoardLists();
+    }
+</script>
+</body>
+</html>

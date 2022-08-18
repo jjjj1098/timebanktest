@@ -6,17 +6,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="public/index.css">
-    <script language = "javascript">
-        for(var i; i<100; i++){
-        temp = decodeURI(document.location.href.split("?")[1])
-        data=temp.split(":");
-        title[i] = data[0];
-        address[i] = data[1];
-        name[i] = data[2];
-        timecoin[i] = data[3];
-        gender[i] = data[4];
-        content[i] = data[5];
-        day[i] = data[6];}
+    <script src="http://code.jquery.com/jquery-latest.js">
+        
+        
+        // function rowAdd () {
+        //     temp = decodeURI(document.location.href.split("?")[1])
+        //     data=temp.split(":");
+        //     title = data[0];
+        //     address = data[1];
+        //     name = data[2];
+        //     timecoin = data[3];
+        //     gender = data[4];
+        //     content = data[5];
+        //     day = data[6];
+		// 	// var input = $("input");
+        //     var input = [data[0],data[2],data[4],data[6],data[3]]
+		// 	var tr = $("<tr></tr>");
+			
+		// 	$.each(input, function(i, item) {
+		// 		var td = $("<td></td>").html($(item).val());
+		// 		$(tr).append(td);
+		// 	});
+		// 	$("table").append(tr);
+		// 	$(input).val("");
+        // }
+    
+            // temp = decodeURI(document.location.href.split("?")[1])
+            // data=temp.split(":");
+            // // title = data[0];
+            // // address = data[1];
+            // // name = data[2];
+            // // timecoin = data[3];
+            // // gender = data[4];
+            // // content = data[5];
+            // // day = data[6];
+            // function rowAdd(){
+            // var oneRow = document.all[row].insertRow();
+            // var tdel = oneRow.insertCell();
+            // tdel.innerHTML = "<input name='del' type='button' onclick = 'del()' value='삭제'>";
+            // var ttitle= oneRow.insertCell(data[0]);
+            // //ttitle = data[0]
+            // document.write(ttitle)
+            // var tname= oneRow.insertCell();
+            // tname.innerHTML = data[2]
+            // var tgender= oneRow.insertCell();
+            // tgender.innerHTML = data[4]
+            // var tday= oneRow.insertCell();
+            // tday.innerHTML = data[6]
+            // var ttimecoin= oneRow.insertCell();
+            // ttimecoin.innerHTML = data[3]
+        //}
+
+        // function rowAdd(){
+        // temp = decodeURI(document.location.href.split("?")[1])
+        // data=temp.split(":");
+        // title = data[0];
+        // address = data[1];
+        // name = data[2];
+        // timecoin = data[3];
+        // gender = data[4];
+        // content = data[5];
+        // day = data[6];
+        // let row = document.createElement('tr');
+        // let row_data_1 = document.createElement('th');
+        // row_data_1.document.write(title);
+        // let row_data_w = document.createElement('th');
+        // row_data_2.innerHTML = name;
+        // let row_data_3 = document.createElement('th');
+        // row_data_3.innerHTML = gender;
+        // let row_data_4 = document.createElement('th');
+        // row_data_4.innerHTML = day;
+        // let row_data_5 = document.createElement('th');
+        // row_data_5.innerHTML = timecoin;
+
+        // row.appendChild(row_data_1);
+        // row.appendChild(row_data_2);
+        // row.appendChild(row_data_3);
+        // row.appendChild(row_data_4);
+        // row.appendChild(row_data_5);
+        // tbody.appendChild(row);
+        // }
+
+        // temp = decodeURI(document.location.href.split("?")[1])
+        // data=temp.split(":");
+        // title = data[0];
+        // address = data[1];
+        // name = data[2];
+        // timecoin = data[3];
+        // gender = data[4];
+        // content = data[5];
+        // day = data[6];
+        // var serverData= localStorage.getItem('toDos');
+
+        // function toDOM(row) {
+        //     var tr = "";
+        //     tr += "<tr>";
+        //     tr += "  <td>" + row.title + "</td>";
+        //     tr += "  <td>" + row.name + "</td>";
+        //     tr += "  <td>" + row.gender + "</td>";
+        //     tr += "  <td>" + row.day + "</td>";
+        //     tr += "  <td>" + row.timecoin + "</td>";
+        //     tr += "</tr>";
+        //     return tr;
+        // }
+
+        // function renderTable(id, dataList) {
+        //     var size = dataList.length;
+        //     var trList = "";
+        //     for (var i = 0; i < size; i++) {
+        //     trList += toDOM(dataList[i]);
+        //     }
+        //     document.querySelector("#" + id + " tbody").innerHTML = trList;
+        // }
+
+        // window.onload = function () {
+        //     renderTable("table", serverData);
+        // };
+
+        // for(var i; i<100; i++){
+        // temp = decodeURI(document.location.href.split("?")[1])
+        // data=temp.split(":");
+        // title = data[0];
+        // address = data[1];
+        // name = data[2];
+        // timecoin = data[3];
+        // gender = data[4];
+        // content = data[5];
+        // day = data[6];}
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Gamja+Flower&display=swap" rel="stylesheet">
 
@@ -40,14 +156,65 @@
                             <td class="td4">요청 날짜</td>
                             <td class="td5">적립시간</td>
                         </tr>
-                        <tr>
+                        <script>
+                            var todo = localStorage.getItem('toDos');
+                            var serverData = JSON.parse(todo);
+                            document.write(serverData)
+                            document.write(listdata)
+                            function toDOM(row) {
+                            var tr = '';
+                            tr += '<tr>';
+                            tr += '  <td>' + row.text + '</td>';
+                            tr += '  <td>' + row.text + '</td>';
+                            tr += '  <td>' + row.date + '</td>';
+                            tr += '  <td>' + row.writer + '</td>';
+                            tr += '</tr>';
+                            return tr;
+                            }
+
+                            function renderTable(id, dataList){
+                            var size = dataList.length;
+                            var trList = '';
+                            for(var i=0; i<size; i++) {
+                                trList += toDOM(dataList[i]);
+                            }
+                            document.querySelector('#' + id + ' tbody').innerHTML = trList;  
+                            }
+
+                            window.onload = function () {
+                            renderTable('table', serverData);
+                            }
+                            // document.write(data);
+                            // const rowCnt = 10;
+                            // const columnCnt = 5;
+
+                            // for (let i = 0; i < rowCnt; i++) {
+                            // document.write('<tr>');
+                            // document.write('<td class="td0">');
+                            // var button = document.createElement('button');
+                            // button.type = 'button';
+                            // button.innerHTML = '삭제';
+                            // button.className = 'td0';
+                            // document.write('</td>');    
+                            // for (let j = 0; j < columnCnt; j++)  {
+                            //     document.write('<td>');
+                            //     document.write(data.text);
+                            //     document.write('</td>');
+                            //     document.write(data.id);
+                            // }
+                            // document.write('</tr>')
+                            // }
+                            // document.write('</table>');
+
+                            </script>
+                        <!-- <tr id="row">
                         <td class="td0"><input  name="del" type="button" value="삭제" ></td>
                         <td class="td2"><script> document.write(title[i]) </script></td>
                         <td class="td1"><script> document.write(name[i])</script></td>
                         <td class="td3"><script> document.write(gender[i])</script></td>
                         <td class="td4"><script> document.write(day[i])</script></td>
-                        <td class="td5"><script> document.write(timecoin[i])</script></td>
-                        </tr>
+                        <td class="td5"><script> document.write(timecoin[i])</script></td> 
+                        </tr>-->
                         
                         <!-- <tr class="tb">
                         <script>
@@ -76,6 +243,7 @@
                     <div class="btnbox">
                         <a href="/"><button class="btn">돌아가기</button></a>
                         <a href="write.html"><button class="btn">도움 요청하기</button></a>
+                        <button class="btn" onclick="rowAdd()">리스트</button>
                     </div>
                 </div>
             </div>
